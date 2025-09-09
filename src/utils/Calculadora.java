@@ -63,6 +63,15 @@ public class Calculadora {
         return listaExpoentes;
     }
 
+    public static int phi(int entrada, Map<Integer, Integer> expoenteMap){
+        int produto = expoenteMap.
+        entrySet().
+        stream().
+        mapToInt(e -> (int) (Math.pow(e.getKey(), e.getValue()) - Math.pow(e.getKey(), e.getValue() - 1)))
+        .reduce(1, (a, b) -> a * b);
+        return produto;
+    }
+
     public static int multiplicar(int a, int b){
         return a * b;
     }
