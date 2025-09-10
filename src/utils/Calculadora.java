@@ -41,12 +41,15 @@ public class Calculadora {
             while(numero % i == 0){
                 listaFatorados.add(i);
                 numero = numero / i;
+                System.out.println("divisao: "+numero);
             }
         }
         
         if (numero > 1) {
             listaFatorados.add(numero);
         }
+
+        System.out.println("lista Fatorados:"+listaFatorados);
         
         return listaFatorados;
     }
@@ -60,6 +63,7 @@ public class Calculadora {
             }).count();
             listaExpoentes.put(elemento, count);
         });
+        System.out.println("lista numeros e expoentes: " + listaExpoentes);
         return listaExpoentes;
     }
 
@@ -70,6 +74,39 @@ public class Calculadora {
         mapToInt(e -> (int) (Math.pow(e.getKey(), e.getValue()) - Math.pow(e.getKey(), e.getValue() - 1)))
         .reduce(1, (a, b) -> a * b);
         return produto;
+    }
+
+    public static int phi(int entrada){
+        Map<Integer, Integer> expoenteMap = contarExpoentes(fatorar(entrada));
+        int produto = expoenteMap.
+        entrySet().
+        stream().
+        mapToInt(e -> (int) (Math.pow(e.getKey(), e.getValue()) - Math.pow(e.getKey(), e.getValue() - 1)))
+        .reduce(1, (a, b) -> a * b);
+        return produto;
+    }
+
+    /**
+     * 
+     * @param a
+     * @param m
+     * @param n
+     * <p>a^m mod n</p>
+     * @return
+     */
+    public static long modExp(long a, long m, long n) {
+        long resultado = 1;
+        a = a % n;
+
+        while (m > 0) {
+            if (m % 2 == 1) {
+                resultado = (resultado * a) % n;
+            }
+            m = m / 2;
+            a = (a * a) % n;
+        }
+
+        return resultado;
     }
 
     public static int multiplicar(int a, int b){
