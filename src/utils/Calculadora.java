@@ -112,4 +112,39 @@ public class Calculadora {
     public static int multiplicar(int a, int b){
         return a * b;
     }
+
+    public static long chineseRemainder(long[] a, long[] m) {
+        long M = 1;
+        for (long mi : m) M *= mi; // Produto total
+
+        long x = 0;
+        for (int i = 0; i < a.length; i++) {
+            long Mi = M / m[i];
+            long yi = modInverse(Mi, m[i]);
+            x += a[i] * Mi * yi;
+        }
+        return ((x % M) + M) % M; // Garantir positivo
+    }
+
+    public static long modInverse(long a, long m) {
+        long[] xy = new long[2];
+        long g = extendedGCD(a, m, xy);
+        if (g != 1) {
+            throw new ArithmeticException("Inverso modular não existe!");
+        }
+        return (xy[0] % m + m) % m;
+    }
+
+    public static long extendedGCD(long a, long b, long[] xy) {
+        if (b == 0) {
+            xy[0] = 1;
+            xy[1] = 0;
+            return a;
+        }
+        long[] xy1 = new long[2];
+        long d = extendedGCD(b, a % b, xy1);
+        xy[0] = xy1[1];
+        xy[1] = xy1[0] - (a / b) * xy1[1];
+        return d;
+    }
 }
